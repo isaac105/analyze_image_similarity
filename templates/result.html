@@ -1,0 +1,68 @@
+{% include "base/header.html" %}
+
+<title>탐색 결과</title>
+
+<style>
+    .card-body { padding: 0 !important }
+</style>
+
+<body class="bg-light">
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header bg-primary text-white">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h3 class="mb-0">탐색 결과</h3>
+                            <button class="btn btn-secondary" style="background-color: blue" onclick="history.back()">메인으로</button>
+                        </div>
+                    </div>
+                    {% if view_cnt >= 3 %}
+                        <!-- 광고 영역 -->
+                        <div id="adSection" class="card-footer text-center">
+                            <div class="alert alert-warning" role="alert">
+                                광고광고
+                            </div>
+                        </div>
+                        <!-- 광고 클릭 이벤트 처리를 위한 버튼 -->
+                        <button id="showResultsButton" class="btn btn-primary mt-3" onclick="showResults()">결과보기</button>
+                    {% endif %}
+                    <div class="card-body" id="return_result" {% if view_cnt >= 3 %}style="display: none;"{% endif %}>
+                        {% if results %}
+                            <div class="row" style="text-align: center;">
+                                {% for result in results %}
+                                    <div class="col-md-4 mb-4">
+                                        <div class="card">
+                                            <img src="{{ result[0] }}" alt="Result Image" class="card-img-top img-thumbnail" style="width:100%;">
+                                            <div class="card-body">
+                                                <span class="badge badge-primary badge-pill">{{ result[0] }}</span>
+                                                <span class="badge badge-primary badge-pill">{{ result[1] }}%</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            <p>매치되는 이미지가 없습니다.</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% if view_cnt >= 3 %}
+        <script>
+            function showResults() {
+                // 결과 영역 표시
+                var resultsSection = document.getElementById('return_result');
+                resultsSection.style.display = 'block';
+
+                // 결과 버튼 숨기기
+                var showResultsButton = document.getElementById('showResultsButton');
+                showResultsButton.style.display = 'none';
+            }
+        </script>
+    {% endif %}
+</body>
+</html>
