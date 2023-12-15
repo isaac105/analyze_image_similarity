@@ -7,12 +7,12 @@ import numpy as np
 import tensorflow as tf
 
 app = Flask("유사 이미지 탐색 프로그램")
-
 app.config['SESSION_TYPE'] = 'filesystem'
 Session(app)
 
 # 모델 로딩
 model = tf.keras.applications.MobileNetV2(weights='imagenet', include_top=False)
+model.trainable = False
 
 
 # 이미지 처리 함수
